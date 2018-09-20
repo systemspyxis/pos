@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Pyxis Pos</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="./assets/javascript/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      y = $('.left').height();
+      $('.items-wrapper').height(y - 250);
+      $('.listContainer').height(y);
+      $('.prodList,.prodEditor').height($(window).height() - 70);
+      y = $('.main').width();
+      $('.right').width(y - 530);
+      $(window).resize(function () {
+        y = $('.left').height();
+        $('.items-wrapper').height(y - 250);
+        $('.listContainer').height(y);
+        $('.prodList,.prodEditor').height($(window).height() - 70);
+        y = $('.main').width();
+        $('.right').width(y - 530);
+      });
+      $('app-edit').focus(function () {
+        alert("Handler for .click() called.");
+      })
+      $('.orderPayment').click(function () {
+        $('.updateOrder').click();
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <app-root></app-root>
+</body>
+
+</html>
