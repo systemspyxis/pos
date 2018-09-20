@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4">
+        <h2>Product List</h2>
+        <input [(ngModel)]='searchText'  placeholder="Product Name" />
+      <div class="prodList">
+        <ul class="heroes">
+          <li *ngFor="let product of products| products: 'ProductDescription' : searchText" [class.selected]="selectedProduct&&product.ProductID === selectedProduct.ProductID" (click)="onSelect(product)">
+            <span class="badge">{{product.ProductID}}</span> {{product.ProductDescription}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <h1 class="well">Product Details</h1>
+      <flash-messages></flash-messages>
+      <div class="prodEditor">
+      <form *ngIf="selectedProduct" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <div class="form-group">
+          <label for="ProductID">Product Code</label>
+          <input type="text" [(ngModel)]="selectedProduct.ProductID" class="form-control" id="ProductID" name="ProductID1" disabled
+            ngModel>
+        </div>
+        <div class="form-group">
+          <label for="ProductSize">Size</label>
+          <input type="text" [(ngModel)]="selectedProduct.ProductSize" class="form-control" id="ProductSize" name="ProductSize1" ngModel>
+        </div>
+        <div class="form-group">
+          <label for="UnitType">Measure Type</label>
+          <select [(ngModel)]="selectedProduct.UnitType" class="form-control" id="UnitType" name="UnitType1" ngModel>
+            <option>Mass</option>
+            <option>Volume</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="BuyPrice">Buying Price</label>
+          <input [(ngModel)]="selectedProduct.BuyPrice" type="number" class="form-control" id="BuyPrice" name="BuyPrice1" ngModel>
+        </div>
+        <div class="form-group">
+          <label for="SellPrice">Selling Price</label>
+          <input [(ngModel)]="selectedProduct.SellPrice" type="number" class="form-control" id="SellPrice" name="SellPrice1" ngModel>
+        </div>
+        <div class="form-group">
+          <label for="ProductDescription">Product Description</label>
+          <textarea [(ngModel)]="selectedProduct.ProductDescription" type="text" class="form-control" id="ProductDescription" name="ProductDescription1"
+            ngModel></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class=main>
+  <div class="left">
+    <form action="">
+      <div class="pos-top" style="margin-bottom: 5px">
+        <div class="form-group" style="margin-bottom: 5px">
+          <select class="form-control" name="" id="">
+            <option value="">Walk-in Client</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 5px">
+          <input class="form-control" placeholder="Search product by code or name, you can scan barcode too" type="text">
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="row items-header">
+          <div class="col-sm-5">Product</div>
+          <div class="col-sm-2">Price</div>
+          <div class="col-sm-2">Qty</div>
+          <div class="col-sm-3">Subtotal</div>
+        </div>
+      </div>
+      <div class="items-wrapper">
+        <div *ngIf="order.Items" class="order-items container-fluid">
+
+          <div *ngFor="let it of order.Items" class="row">
+            <div class="col-sm-5">
+              <button type="button" class="btn bg-purple btn-block btn-xs edit">
+                <span class="sname">{{it.Product}}</span>
+              </button>
+            </div>
+            <div class="col-sm-2" style="display:flex;align-items:center;justify-content:center;">{{it.Price}}</div>
+            <div class="col-sm-2" style="display:flex;align-items:center;justify-content:center;">{{it.Quantity}}</div>
+            <div class="col-sm-2" style="display:flex;align-items:center;justify-content:center;">{{it.Subtotal}}</div>
+            <div class="col-sm-1" style="display:flex;align-items:center; justify-content:center;">
+              <i (click)="removeProduct(it)" class="fa fa-trash-o"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="order-summary">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-3">Total Items</div>
+            <div class="col-sm-3">{{order.TotalItems}}</div>
+            <div class="col-sm-3">Total</div>
+            <div class="col-sm-3">{{order.TotalPayable}}</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">Discount</div>
+            <div class="col-sm-3">0</div>
+            <div class="col-sm-3">Order Tax</div>
+            <div class="col-sm-3">0</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">Total Payable</div>
+            <div class="col-sm-6">{{order.TotalPayable}}</div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="row buttons">
+            <div class="col-sm-4">
+              <div class="btn-group-vertical btn-block">
+                <button type="button" class="btn btn-warning btn-block btn-flat" id="suspend">Hold</button>
+                <button type="button" class="btn btn-danger btn-block btn-flat" id="reset">Cancel</button>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="btn-group-vertical btn-block">
+                <button type="button" class="btn bg-purple btn-block btn-flat" id="print_order">Print Order</button>
+
+                <button type="button" class="btn bg-navy btn-block btn-flat" id="print_bill">Print Bill</button>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <button (click)="updateOrderService()" type="button" class="btn btn-success btn-block btn-flat orderPayment" id="OrderPayment" style="height:100%;"
+                data-toggle="modal" data-target="#myModal">Payment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="right">
+      <input [(ngModel)]='searchText'  placeholder="Product Name" />
+    <div class="listContainer">
+      <div class="product-list">
+        <div>
+          <button *ngFor="let prod of products | products: 'ProductDescription' : searchText" (click)="buyProduct(prod)" type="button" class="btn btn-both btn-flat product">
+            <span class="bg-img">
+              <img src="../../assets/IMG/pic.png" alt="Minion Hi" style="width: 100px; height: 100px;">
+            </span>
+            <span>
+              <span>{{prod.ProductDescription}}</span>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="product-nav"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <h1 class="well">Create A Product</h1>
+  <flash-messages></flash-messages>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <div class="form-group">
+      <label for="ProductID">Product Code</label>
+      <input type="text" class="form-control" id="ProductID" name="ProductID1" ngModel>
+    </div>
+    <div class="form-group">
+      <label for="ProductSize">Size</label>
+      <input type="text" class="form-control" id="ProductSize" name="ProductSize1" ngModel>
+    </div>
+    <div class="form-group">
+      <label for="UnitType">Measure Type</label>
+      <select class="form-control" id="UnitType" name="UnitType1" ngModel>
+        <option>Mass</option>
+        <option>Volume</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="BuyPrice">Buying Price</label>
+      <input type="number" class="form-control" id="BuyPrice" name="BuyPrice1" ngModel>
+    </div>
+    <div class="form-group">
+      <label for="SellPrice">Selling Price</label>
+      <input type="number" class="form-control" id="SellPrice" name="SellPrice1" ngModel>
+    </div>
+    <div class="form-group">
+      <label for="ProductDescription">Product Description</label>
+      <textarea type="text" class="form-control" id="ProductDescription" name="ProductDescription1" ngModel></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div>

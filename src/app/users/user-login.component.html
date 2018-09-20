@@ -1,0 +1,21 @@
+<div class="loginContainerWrapper" style="position: fixed;top: 0;left: 0;bottom: 0;right: 0;overflow: auto;">
+  <div class="container">
+    <div class="form">
+      <div class="logon-form-container logon-form">
+        <div id="logonForm">
+          <div class="thumbnail">
+            <i class="fa fa-user fa-4x"></i>
+          </div>
+          <form class="login-form" #f="ngForm" (ngSubmit)="login(f)">
+            <input id="userName" name="UserName" placeholder="username" type="text" ngModel>
+            <div class="form-group" style="margin-bottom: 0px;">
+              <input data-toggle="tooltip" id="passwordBox" name="Password" placeholder="password" title="Caps lock is on" type="password" ngModel>
+              <label  style="height: 50px;">&nbsp;</label>
+              <button type="submit"  id="btn_logon">Log In</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

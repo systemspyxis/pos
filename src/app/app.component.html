@@ -1,0 +1,184 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="wrapper">
+    <header>
+        <a class="logo">
+            <span class="logo-lg">Pyxis
+                <b>POS</b>
+            </span>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation"></nav>
+    </header>
+    <aside class="main-sidebar">
+        <ul id="menu-content" class="menu-content">
+            <li>
+                <a>
+                    <i class="fa fa-dashboard fa-lg"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a routerLink="/pos">
+                    <i class="fa fa-th fa-lg"></i> POS
+                </a>
+            </li>
+            <li data-toggle="collapse" data-target="#products" class="collapsed">
+                <a>
+                    <i class="fa fa-barcode fa-lg"></i> Products
+                    <span class="arrow"></span>
+                </a>
+            </li>
+            <ul class="sub-menu collapse" id="products">
+                <li>
+                    <a>List</a>
+                </li>
+                <li>
+                    <a routerLink="/product/new">Add</a>
+                </li>
+                <li>
+                    <a routerLink="/product/edit">Edit</a>
+                </li>
+                <li>
+                    <a routerLink="/product/remove">Delete</a>
+                </li>
+            </ul>
+            <li data-toggle="collapse" data-target="#users" class="collapsed">
+                <a>
+                    <i class="fa fa-users fa-lg"></i> Users
+                    <span class="arrow"></span>
+                </a>
+            </li>
+            <ul class="sub-menu collapse" id="users">
+                <li>
+                    <a>List</a>
+                </li>
+                <li>
+                    <a routerLink="user/new">Add</a>
+                </li>
+                <li>
+                    <a routerLink="/user/edit">Edit</a>
+                </li>
+            </ul>
+            <li data-toggle="collapse" data-target="#reports" class="collapsed">
+                <a>
+                    <i class="fa fa-bar-chart-o fa-lg"></i> Reports
+                    <span class="arrow"></span>
+                </a>
+            </li>
+            <ul class="sub-menu collapse" id="reports">
+                <li>Sales</li>
+                <li>Customers</li>
+            </ul>
+        </ul>
+    </aside>
+    <div class="content-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<div #mmodal class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="payModalLabel">
+                    Payment </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="font16">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Total Items</td>
+                                        <td>{{orderService.order.TotalItems}}</td>
+                                        <td>Total Payable</td>
+                                        <td>{{orderService.order.TotalPayable}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Balance</td>
+                                        <td>{{orderService.order.Balance}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="note">Note</label>
+                                    <textarea name="note" id="note" class="pa form-control kb-text"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngFor="let od of orderService.order.PaymentMethods" class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="amount">Amount</label>
+                                    <input [disabled]="od.disabled" (input)="amountChanged()" [(ngModel)]="od.amount" name="amount" type="number" id="amount"
+                                        class="pa form-control kb-pad amount">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="paid_by">Paying by</label>
+                                    <select [disabled]="od.disabled" #payOption (change)="payTypeChanged(payOption.value,od)" id="paid_by" class="form-control paid_by select2 select2-hidden-accessible"
+                                        style="width:100%;" tabindex="-1" aria-hidden="true">
+                                        <option *ngFor="let op of od.options" value="{{op}}">{{op}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="amount">Add</label>
+                                    <button [disabled]="od.disabled" (click)="addPayment(od)" type="button" class="btn btn-primary">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="amount">Remove</label>
+                                    <button [disabled]="od.disabled" (click)="removePayment(od)" type="button" class="btn btn-danger">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pcash" style="display: block;">
+                            <div class="form-group">
+                                <label for="payment_note">Payment Note</label>
+                                <input type="text" id="payment_note" class="form-control payment_note kb-text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 text-center">
+                        <div class="btn-group btn-group-vertical" style="width:100%;">
+                            <button type="button" class="btn btn-info btn-block quick-cash" id="quick-payable">{{orderService.order.TotalPayable}}</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">50c</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">1</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">5</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">10</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">20</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">40</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">50</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">100</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">200</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">500</button>
+                            <button type="button" class="btn btn-block btn-warning quick-cash">1000</button>
+                            <button type="button" class="btn btn-block btn-danger" id="clear-cash-notes">Clear</button>
+                            <!-- <button (click)="updateOrder()" type="button" class="updateOrder" style="display:none;"></button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" id="closeModal" data-dismiss="modal"> Close </button>
+                <button (click)="checkOut(mmodal)" class="btn btn-primary" id="submit-sale">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
